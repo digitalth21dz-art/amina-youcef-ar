@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>يوسف وأمينة - دعوة زفاف</title>
+    <meta name="description" content="دعوة لحضور حفل زفاف يوسف وأمينة، يوم 29 أوت 2026">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --lavender: #590B2F;
+            /* Bourgogne principal */
+            --lavender-light: #7E1043;
+            /* Bourgogne clair */
+            --lavender-dark: #3F0821;
+            /* Bourgogne foncé */
+            --cream: #FFFFFF;
+            /* Blanc pur */
+            --cream-warm: #FAF8F5;
+            /* Blanc cassé / Crème */
+            --text-dark: #210411;
+            /* Bourgogne très foncé (pour le texte) */
+            --text-light: #FFFFFF;
+            /* Blanc (pour le texte sur fond foncé) */
+            --gold: #C9A96E;
+            /* Doré */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Amiri', 'Cormorant Garamond', serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== ENVELOPE OPENING SCREEN ===== */
+        .envelope-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            background: var(--lavender-dark);
+            /* Remplacé le marron par le bourgogne foncé */
+        }
+
+        .envelope-scene.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 200px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f9f6f0 0%, var(--cream-warm) 50%, #e8dec9 100%);
+            border-radius: 4px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(135deg, #f9f6f0 0%, var(--cream-warm) 50%, #e8dec9 100%);
+            border-radius: 4px;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .fold-line-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #f9f6f0 0%, var(--cream-warm) 50%, #e8dec9 100%);
+            clip-path: polygon(0 0, 100% 55%, 0 100%);
+            z-index: 2;
+        }
+
+        .fold-line-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #f9f6f0 0%, var(--cream-warm) 50%, #e8dec9 100%);
+            border-radius: 4px;
+            clip-path: polygon(100% 0, 0 55%, 100% 100%);
+            z-index: 2;
+        }
+
+        .seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 125px;
+            height: 125px;
+            transform: translate(-50%, -40%);
+            z-index: 5;
+            background: url('wax_seal.png') no-repeat center center / cover;
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+        }
+
+        .seal::before {
+            content: '';
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .seal-text {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.6rem;
+            color: var(--cream-warm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .envelope-container.opening .envelope-flap {
+            transform: rotateX(180deg);
+            opacity: 0.3;
+        }
+
+        .envelope-container.opening .seal {
+            transform: translate(-50%, -50%) scale(0) rotate(360deg);
+            opacity: 0;
+        }
+
+        .envelope-container.opening {
+            transform: scale(1.1);
+            opacity: 0;
+            transition: all 0.6s ease 0.4s;
+        }
+
+        .tap-text {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--cream-warm) 0%, var(--cream) 60%, var(--cream-warm) 100%);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero-arch {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .arch-frame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 380px;
+            border: 2px solid rgba(201, 169, 110, 0.3);
+            /* Utilisation du doré transparent */
+            border-radius: 160px 160px 0 0;
+            pointer-events: none;
+        }
+
+        .arch-frame::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            border-radius: inherit;
+        }
+
+        .wisteria-top {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 380px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .wisteria-top img {
+            width: 100%;
+            height: auto;
+            opacity: 0.4;
+        }
+
+        .wisteria-side-left,
+        .wisteria-side-right {
+            position: absolute;
+            top: 60px;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .wisteria-side-left {
+            left: -10px;
+        }
+
+        .wisteria-side-right {
+            right: -10px;
+        }
+
+        .wisteria-side-left img,
+        .wisteria-side-right img {
+            width: 100%;
+            height: auto;
+            opacity: 0.7;
+        }
+
+        .hero-label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            /* Assorti au doré */
+            margin-top: 120px;
+            margin-bottom: 20px;
+        }
+
+        .hero-names {
+            font-family: 'Aref Ruqaa', 'Great Vibes', cursive;
+            font-size: clamp(42px, 12vw, 64px);
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--lavender);
+            /* Bourgogne principal pour les noms */
+            margin-bottom: 5px;
+        }
+
+        .hero-ampersand {
+            font-family: 'Aref Ruqaa', 'Great Vibes', cursive;
+            font-size: clamp(32px, 8vw, 48px);
+            color: var(--gold);
+            /* Le "&" en doré */
+            margin: -10px 0;
+        }
+
+        .hero-invite {
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+            margin-top: 20px;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 20px auto;
+        }
+
+        .hero-date {
+            font-family: 'Cairo', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--lavender);
+        }
+
+        .hero-venue {
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .scroll-hint {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            opacity: 0.7;
+        }
+
+        .scroll-hint span {
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .scroll-hint svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gold);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        /* ===== MUSIC TOGGLE ===== */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .music-toggle svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--lavender);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .music-toggle.playing {
+            animation: musicPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
+            }
+        }
+
+        /* ===== MESSAGE SECTION ===== */
+        .message-section {
+            padding: 80px 30px;
+            text-align: center;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .wisteria-divider {
+            width: 200px;
+            margin: 0 auto 40px;
+            opacity: 0.7;
+        }
+
+        .wisteria-divider img {
+            width: 100%;
+            height: auto;
+        }
+
+        .section-label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(24px, 5vw, 34px);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .message-text {
+            font-family: 'Amiri', serif;
+            font-size: clamp(16px, 3vw, 19px);
+            font-weight: 400;
+            line-height: 2;
+            color: var(--text-dark);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .message-text p {
+            margin-bottom: 0px;
+            font-size: 19px;
+            font-weight: 50;
+
+        }
+
+        /* ===== COUNTDOWN SECTION ===== */
+        .countdown-section {
+            padding: 6rem 1.5rem;
+            background: var(--cream-warm);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1490750967868-88aa9f00c3f8?w=800&q=80') center/cover;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+        }
+
+        .countdown-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .countdown-subtitle {
+            font-family: 'Cairo', sans-serif;
+            font-size: .95rem;
+            color: var(--lavender-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 1.5rem 0 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-card {
+            background: var(--cream);
+            border: 1.5px solid var(--gold);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            min-width: 130px;
+            flex: 1 1 130px;
+            max-width: 160px;
+            box-shadow: 0 8px 28px rgba(89, 11, 47, 0.05);
+            transition: transform .3s ease;
+        }
+
+        .countdown-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .countdown-number {
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 4rem);
+            font-weight: 600;
+            color: var(--lavender);
+            line-height: 1;
+            display: block;
+            text-align: center;
+        }
+
+        .countdown-label {
+            display: block;
+            font-family: 'Amiri', serif;
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: .6rem;
+        }
+
+        .ampersand {
+            display: block;
+            font-size: 20px;
+            justify-content: center;
+            color: var(--gold);
+            font-style: italic;
+            margin: 0 auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .countdown-card:last-child .countdown-number {
+            color: var(--gold);
+        }
+
+        /* ===== PROGRAMME SECTION ===== */
+        .programme-section {
+            padding: 80px 20px;
+            background: var(--cream-warm);
+            text-align: center;
+        }
+
+        .programme-date {
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .programme-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 50px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+            padding-right: 50px;
+            padding-left: 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 20px;
+            left: auto;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--lavender), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            text-align: right;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: -42px;
+            left: auto;
+            top: 2px;
+            width: 36px;
+            height: 36px;
+            background: var(--cream);
+            border: 2px solid var(--gold);
+            /* Cercle de la timeline en doré */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .timeline-dot svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--lavender);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .timeline-time {
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--lavender-light);
+            margin-bottom: 4px;
+        }
+
+        .timeline-event {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .timeline-detail {
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        /* ===== VENUE SECTION ===== */
+        .venue-section {
+            padding: 60px 20px 80px;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .wisteria-banner {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            opacity: 0.8;
+        }
+
+        .wisteria-banner img {
+            width: 100%;
+            height: auto;
+        }
+
+        .venue-label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .venue-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(22px, 5vw, 28px);
+            font-weight: 600;
+            color: var(--lavender);
+        }
+
+        .venue-name {
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .venue-address {
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+        }
+
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Amiri', serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--lavender);
+            text-decoration: none;
+            margin-bottom: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .map-link:hover {
+            color: var(--gold);
+        }
+
+        .map-link svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--lavender);
+        }
+
+        .map-container {
+            width: 100%;
+            max-width: 400px;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 30px;
+            box-shadow: 0 8px 30px rgba(89, 11, 47, 0.06);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: saturate(0.7);
+        }
+
+        .open-maps-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--lavender);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(89, 11, 47, 0.2);
+        }
+
+        .open-maps-btn:hover {
+            background: var(--lavender-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(89, 11, 47, 0.3);
+        }
+
+        /* ===== FOUNTAIN DECORATION ===== */
+        .fountain-decoration {
+            width: min(220px, 70vw);
+            margin: 36px auto 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .fountain-decoration img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0;
+            object-fit: contain;
+            box-shadow: none;
+            opacity: 0.95;
+        }
+
+        .gallery {
+            padding: 6rem 1.5rem;
+            background: #fff;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            height: 400px;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 60, 38, 0.2);
+            /* Léger filtre vert forêt */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            border-bottom: 1px solid white;
+            padding-bottom: 5px;
+        }
+
+
+        /* ===== PHOTOS / CAROUSEL GALLERY ===== */
+        .gallery-section {
+            padding: 60px 0;
+            overflow: hidden;
+            position: relative;
+            background: var(--cream);
+            opacity: 1 !important;
+        }
+
+
+        .fade-in:not(.gallery-section) {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in:not(.gallery-section).visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .photo-grid {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .photo-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(89, 11, 47, 0.05);
+            height: 400px;
+            min-width: calc(33.333% - 1.34rem);
+            flex-shrink: 0;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(89, 11, 47, 0.2);
+            /* Léger filtre Bourgogne au lieu de vert forêt */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-overlay h3 {
+            font-family: 'Aref Ruqaa', serif;
+            color: white;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid white;
+            padding-bottom: 5px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            padding: 0 20px;
+            width: max-content;
+            transition: none;
+        }
+
+        .carousel-item {
+            flex-shrink: 0;
+            width: 300px;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .carousel-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(89, 11, 47, 0.15);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .carousel-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 20px 20px;
+            background: linear-gradient(to top, rgba(33, 4, 17, 0.7) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .carousel-item:hover .carousel-overlay {
+            opacity: 1;
+        }
+
+        .carousel-overlay span {
+            color: white;
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .carousel-container.reverse .carousel-item {
+            width: 250px;
+            height: 320px;
+        }
+
+        .carousel-container.reverse {
+            margin-top: 20px;
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(to right, var(--cream), transparent);
+        }
+
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(to left, var(--cream), transparent);
+        }
+
+
+        .annonce-container {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .annonce-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .annonce-citation {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 600;
+            color: var(--lavender-dark);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .annonce-texte {
+            font-family: 'Amiri', serif;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 400;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--lavender-dark);
+        }
+
+        .footer-text {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cream-warm);
+            opacity: 0.6;
+        }
+
+        .footer-social {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: var(--lavender);
+            opacity: 0.6;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        /* ===== PARTICLES ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--lavender-light);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0;
+            animation: fall 12s infinite;
+            transform: rotate(45deg);
+        }
+
+
+        .event-details {
+            padding: 6rem 1.5rem 2rem;
+            background: var(--bg-light);
+            text-align: center;
+        }
+
+        .details-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            flex-wrap: wrap;
+        }
+
+        .details-card {
+            /* Fond avec dégradé subtil */
+            background: linear-gradient(145deg, #ffffff 0%, #faf8f5 100%);
+
+            /* Bordure dorée avec effet lumineux */
+            border: 1px solid rgba(201, 168, 124, 0.3);
+            border-radius: 20px;
+
+            /* Espacement généreux */
+            padding: 3rem 2.5rem;
+
+            /* Layout flexible */
+            flex: 1 1 450px;
+            max-width: 520px;
+
+            /* Ombres sophistiquées en couches */
+            box-shadow:
+                0 4px 6px rgba(201, 168, 124, 0.05),
+                0 10px 40px rgba(201, 168, 124, 0.08),
+                0 20px 60px rgba(0, 0, 0, 0.04);
+
+            /* Texte aligné à droite pour RTL */
+            text-align: right;
+
+            /* Couleur du texte */
+            color: var(--text-dark);
+
+            /* Position relative pour les éléments décoratifs */
+            position: relative;
+            overflow: hidden;
+
+            /* Transition fluide */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Ligne décorative dorée en haut */
+        .details-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    var(--gold) 20%,
+                    #e8d5b5 50%,
+                    var(--gold) 80%,
+                    transparent 100%);
+            opacity: 0.7;
+        }
+
+        /* Effet de brillance subtil */
+        .details-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%,
+                    rgba(255, 255, 255, 0.4) 0%,
+                    transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Effet hover élégant */
+        .details-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow:
+                0 8px 12px rgba(201, 168, 124, 0.1),
+                0 20px 50px rgba(201, 168, 124, 0.12),
+                0 30px 80px rgba(0, 0, 0, 0.06);
+            border-color: rgba(201, 168, 124, 0.5);
+        }
+
+        /* Animation d'entrée subtile */
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .details-card {
+            animation: cardAppear 0.6s ease-out forwards;
+        }
+
+        /* Style pour les titres à l'intérieur */
+        .details-card h3,
+        .details-card h4 {
+            color: var(--lavender);
+            font-family: 'Aref Ruqaa', serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Soulignement élégant pour les titres */
+        .details-card h3::after,
+        .details-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            left: auto;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to left, var(--gold), transparent);
+            border-radius: 2px;
+        }
+
+        /* Style pour le texte */
+        .details-card p {
+            line-height: 1.7;
+            color: #555;
+            font-size: 0.95rem;
+            font-family: 'Amiri', serif;
+        }
+
+        /* Icônes ou éléments décoratifs */
+        .details-card .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold), #d4a574);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(201, 168, 124, 0.3);
+        }
+
+        .details-card .icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .details-card i.card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .details-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details-list p {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            color: var(--lavender-dark);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .details-list p i {
+            margin-left: 0.5rem;
+            margin-right: 0;
+            color: var(--gold);
+        }
+
+        .details-list p::before {
+            content: none;
+            /* Désactivé pour n'utiliser que les icônes de FontAwesome */
+        }
+
+        .details-list p.time-row::before {
+            content: none;
+        }
+
+        .details-list p.time-row i {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin-left: 0.3rem;
+            margin-right: 0;
+        }
+
+
+        .fountain-decoration {
+            display: block;
+            margin: 0 auto;
+            width: 180px;
+            /* ajuste selon tes besoins */
+
+            animation:
+                fadeIn 2s ease forwards,
+                float 4s ease-in-out infinite,
+                glow 3s ease-in-out infinite;
+
+            transform-origin: center;
+        }
+
+        /* Apparition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Lévitation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Halo doré */
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px rgba(212, 175, 55, .25));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 18px rgba(212, 175, 55, .8));
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) rotate(0deg) scale(0.5);
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg) scale(1);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .photo-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .photo-card {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .envelope-wrapper {
+                width: 260px;
+                height: 190px;
+            }
+
+            .photo-grid {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .arch-frame {
+                width: 280px;
+                height: 340px;
+            }
+
+            .timeline {
+                padding-right: 45px;
+                padding-left: 0;
+            }
+
+            .countdown-grid {
+                gap: 1rem;
+            }
+
+            .countdown-card {
+                min-width: 80px;
+                padding: 1.4rem 1rem;
+            }
+
+            .carousel-item {
+                width: 250px;
+                height: 330px;
+            }
+
+            .carousel-container.reverse .carousel-item {
+                width: 200px;
+                height: 260px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Lévitation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Halo doré */
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px rgba(212, 175, 55, .25));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 18px rgba(212, 175, 55, .8));
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) rotate(0deg) scale(0.5);
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg) scale(1);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .photo-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .photo-card {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .envelope-wrapper {
+                width: 260px;
+                height: 190px;
+            }
+
+            .photo-grid {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .arch-frame {
+                width: 280px;
+                height: 340px;
+            }
+
+            .timeline {
+                padding-left: 45px;
+            }
+
+            .countdown-grid {
+                gap: 1rem;
+            }
+
+            .countdown-card {
+                min-width: 80px;
+                padding: 1.4rem 1rem;
+            }
+
+            .carousel-item {
+                width: 250px;
+                height: 330px;
+            }
+
+            .carousel-container.reverse .carousel-item {
+                width: 200px;
+                height: 260px;
+            }
+        }
+    </style>
+    <base target="_blank">
+    <base target="_blank">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <base target="_blank">
+</head>
+
+<body>
+
+    <!-- Music Toggle Button -->
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+        <svg id="musicIconOff" viewBox="0 0 24 24" style="display:block">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+            <line x1="1" y1="1" x2="23" y2="23" />
+        </svg>
+        <svg id="musicIconOn" viewBox="0 0 24 24" style="display:none">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+        </svg>
+    </button>
+
+    <!-- Audio Element -->
+    <audio id="weddingMusic" src="musique.mp3" loop preload="auto"></audio>
+
+    <!-- Petals -->
+    <div class="particles" id="particles"></div>
+
+    <div class="envelope-scene" id="envelopeScene">
+        <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="fold-line-left"></div>
+                <div class="fold-line-right"></div>
+            </div>
+            <div class="envelope-flap"></div>
+            <div class="seal"></div>
+
+            <div class="tap-text">اضغط لفتح الدعوة</div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-arch">
+
+                <div class="wisteria-top">
+                    <video autoplay loop muted playsinline
+                        style="width:100%; height:auto; mask-image: linear-gradient(to bottom, black 30%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%); object-fit: cover; border-radius: 160px 160px 0 0;">
+                        <source src="image54.mov" type="video/mp4">
+
+                        <!-- Fallback image si la vidéo ne charge pas -->
+                        <img src="couple.png" alt="Wisteria"
+                            style="mask-image: linear-gradient(to bottom, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);">
+                    </video>
+                </div>
+
+
+
+            </div>
+
+            <div class="hero-label"></div>
+
+            <div class="hero-names">يوسف</div>
+            <div class="hero-ampersand">و</div>
+            <div class="hero-names">آمنة</div>
+            <div class="hero-invite">يدعونكم لمشاركتهم فرحة زفافهم</div>
+            <div class="hero-divider"></div>
+            <div class="hero-date">29 أوت 2026</div>
+        </section>
+
+
+
+        <!-- Message Section -->
+        <section class="message-section" id="messageSection">
+
+            <h2 class="section-title">يسعدنا أن نشارككم<br>هذا الخبر السار!</h2>
+            <div class="message-text">
+                <p>ببالغ الفرح والسرور، يسعدنا أن نعلن لكم عن زفافنا الذي سيقام يوم 29 أوت 2026 بقاعة
+                    الحفلات "L'impérial" — الخروب — قسنطينة.</p>
+                <p>ويشرفنا حضوركم لتشاركونا فرحة هذه اللحظات الفريدة والثمينة من حياتنا.</p>
+            </div>
+        </section>
+
+        <section class="countdown-section" id="countdownSection">
+            <h2 class="countdown-title">العد التنازلي لليوم المنتظر</h2>
+            <p class="countdown-subtitle">متبقي على تاريخ 29 أوت 2026</p>
+            <div class="countdown-grid">
+                <div class="countdown-card">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">أيام</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">ساعات</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">دقائق</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">ثواني</span>
+                </div>
+            </div>
+        </section>
+
+          <section class="gallery-section fade-in">
+        <div class="gallery-title">
+
+              <h2 class="section-title">لحظاتنا الثمينة</h2>
+        </div>
+
+        <!-- First Row - Left to Right -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack1">
+                <!-- Original items -->
+                <div class="carousel-item">
+                    <img src="imgae1.jpeg" alt="Wedding couple">
+                    <div class="carousel-overlay"><span> لحظاتنا الثمينة</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image2.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>ورود</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image3.jpeg" alt="Wedding venue">
+                    <div class="carousel-overlay"><span>كيك</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image4.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>حب</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image6.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>ورود</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image7.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>أقراص الزواج</span></div>
+                </div>
+              
+
+                <!-- Duplicated items for seamless infinite loop -->
+                <div class="carousel-item">
+                    <img src="imgae1.jpeg" alt="Wedding couple">
+                    <div class="carousel-overlay"><span> لحظاتنا الثمينة</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image2.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>ورود</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image3.jpeg" alt="Wedding venue">
+                    <div class="carousel-overlay"><span>كيك</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image4.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>حب</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image6.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>ورود</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image7.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay"><span>أقراص الزواج</span></div>
+                </div>
+              
+
+            </div>
+        </div>
+
+
+    </section>
+ 
+
+        <section class="annonce-container">
+            <div class="annonce-wrapper">
+                <div class="annonce-citation">"بداية رحلة حياة جديدة معاً."</div>
+                <div class="details-card">
+                    <h4>"الحب لا يُعثر عليه، بل يُبنى. ونحن نبني حبنا معاً، خطوة بخطوة، وابتسامة بابتسامة، إلى الأبد."
+                    </h4>
+                </div>
+            </div>
+
+
+
+        </section>
+        <section style="display: flex;
+    flex-direction: column;
+    align-items: center;     
+    justify-content: center;
+    text-align: center;">
+
+            <h2
+                style="font-family: 'Aref Ruqaa', serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 400; color: var(--text-dark); margin-bottom: 10px;">
+                رابطة عائلتين</h2>
+
+            <div class="couple-names">
+
+                <span class="ampersand">عائلتي بلعزيزية و بورابة</span>
+
+            </div>
+
+            <img src="rings.png" alt="Fountain Decoration" class="fountain-decoration" style="margin: 0%; width:220px; height:auto; justify-content: center; display: block;
+    margin: 0 auto;">
+        </section>
+
+
+
+           
+    <section class="gallery-section fade-in">
+
+
+        <div class="gallery-title">
+
+            <h2 class="section-title">قاعة الحفلات</h2>
+        </div>
+
+        <!-- First Row - Left to Right -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack2">
+                <!-- Original items -->
+                <div class="carousel-item">
+                    <img src="image11.jpeg" alt="Wedding couple">
+                    <div class="carousel-overlay">   <span>ليلة الحناء</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image12.jpeg" alt="Wedding rings">
+                    <div class="carousel-overlay">   <span>قاعة الحفلات</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image13.jpeg" alt="Wedding venue">
+                    <div class="carousel-overlay">   <span>ديكور</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image14.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay">   <span>زينة</span></div>
+                </div>
+
+                <!-- Duplicated items for seamless infinite loop -->
+                <div class="carousel-item">
+                    <img src="image11.jpeg" alt="Wedding couple">
+                    <div class="carousel-overlay">   <span>ليلة الحناء</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image12.jpeg" alt="Wedding rings">
+                    <div class="carousel-overlay">   <span>قاعة الحفلات</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image13.jpeg" alt="Wedding venue">
+                    <div class="carousel-overlay">   <span>ديكور</span></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image14.jpeg" alt="Wedding flowers">
+                    <div class="carousel-overlay">   <span>زينة</span></div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+        <!-- Programme Section -->
+        <section class="programme-section" id="programmeSection">
+            <h2 class="programme-title">برنامج يوم الزفاف</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">15:30</div>
+                    <div class="timeline-event">استقبال الضيوف</div>
+                    <div class="timeline-detail">افتتاح مراسم الاستقبال والترحيب بالحضور الكريم في قاعة الحفلات</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="12" r="4" />
+                            <circle cx="15" cy="12" r="4" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">17:00</div>
+                    <div class="timeline-event">زفة ودخول العروسين</div>
+                    <div class="timeline-detail">إطلالة مفعمة بالأناقة والجمال على أنغام التقاليد الأصيلة</div>
+                </div>
+
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+                            <path d="M6 1v3M10 1v3M14 1v3" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">18:00</div>
+                    <div class="timeline-event">استراحة القهوة</div>
+                    <div class="timeline-detail">تقديم القهوة والشاي مع أشهى الحلويات الجزائرية التقليدية</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 7l4 6 5-8 5 8 4-6-2 12H5L3 7z" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">18:30</div>
+                    <div class="timeline-event">التصديرة والحناء</div>
+                    <div class="timeline-detail">مراسم تصديرة العروس بأبهى أزيائها التقليدية الفاخرة مع وضع الحناء</div>
+                </div>
+
+
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+                            <path d="M6 1v3M10 1v3M14 1v3" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">22:00</div>
+                    <div class="timeline-event">مأدبة العشاء</div>
+                    <div class="timeline-detail">تقديم أطباق الضيافة من المأكولات الجزائرية التقليدية العريقة</div>
+                </div>
+
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 20h12" />
+                            <path d="M7 20v-5h10v5" />
+                            <path d="M8 15v-4h8v4" />
+                            <path d="M10 11V8h4v3" />
+                            <path d="M12 5v3" />
+                        </svg>
+                    </div>
+                    <div class="timeline-time">00:00</div>
+                    <div class="timeline-event">كعكة الزفاف</div>
+                    <div class="timeline-detail">اللحظة المميزة لليوم: تبادل خواتم الزفاف، يليها تقطيع كعكة الزفاف
+                        الاحتفالية.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue Section -->
+        <section class="venue-section" id="venueSection">
+
+            <h2 class="programme-title">تفاصيل الزفاف</h2>
+
+            <div class="details-grid">
+
+
+                <!-- Carte Lieu -->
+                <div class="details-card">
+
+                    <ul class="details-list">
+                        <p><i class="fas fa-location-dot"></i>قاعة الحفلات الإمبراطورية (L'impérial)، الخروب، قسنطينة
+                        </p>
+                        <p><i class="fas fa-clock"></i>السبت 29 أوت 2026 من الساعة 15:30 حتى 00:00</p>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="map-container">
+                <iframe
+                    src="https://maps.google.com/maps?q=Cit%C3%A9%2005%20Ain%20el%20Bey,%20El%20Khroub%2025000,%20Algeria&z=16&output=embed"
+                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+
+            <a href="https://maps.app.goo.gl/26tSvkLqubCrgNLc9" target="_blank" class="open-maps-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
+                الموقع على الخريطة
+            </a>
+
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-text">عائلة بلعزيزية و عائلة بورابة</div>
+            <p
+                style="margin-top:1.5rem;font-size:.9rem;opacity:.7;font-family:'Amiri',sans-serif;letter-spacing:1px; color: #f7f0f0;">
+                شكراً لكم على مشاركتنا هذه اللحظات السعيدة
+            </p>
+            <p style="color: #f7f0f0;">29 أوت 2026</p>
+        </footer>
+
+
+    </div>
+
+    <script>
+        // ===== ENVELOPE OPENING =====
+        let envelopeOpened = false;
+
+        function openEnvelope() {
+            // Évite le double clic si l'enveloppe s'ouvre déjà
+            if (typeof envelopeOpened !== 'undefined' && envelopeOpened) return;
+            if (typeof isOpened !== 'undefined' && isOpened) return;
+
+            // On passe la sécurité à true
+            envelopeOpened = true;
+            if (typeof isOpened !== 'undefined') isOpened = true;
+
+            // 1. Lancement IMMÉDIAT du son au clic
+            if (typeof playMusic === 'function') playMusic();
+            if (typeof playAudio === 'function') playAudio();
+
+            // Sélection des éléments d'après VOTRE HTML
+            const envelope = document.getElementById('envelope');
+            const scene = document.getElementById('envelopeScene');
+            const main = document.getElementById('mainContent'); // Votre écran principal
+
+            // 2. Déclenche l'animation CSS (Rabat qui tourne + Sceau qui disparait)
+            if (envelope) envelope.classList.add('opening');
+
+            // 3. Attente de la fin de l'animation pour basculer d'écran (1000ms)
+            setTimeout(() => {
+                // Cache la scène de l'enveloppe
+                if (scene) scene.classList.add('hidden');
+
+                // Affiche le contenu de l'invitation
+                if (main) main.classList.add('visible');
+
+                // Lance vos effets secondaires (Pétales, compte à rebours...)
+                if (typeof initPetals === 'function') initPetals();
+                if (typeof startCountdown === 'function') startCountdown();
+
+                // Gestion de l'apparition progressive des éléments (Optionnel)
+                const fadeElements = document.querySelectorAll('.fade-in');
+                fadeElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, 200 + (index * 150));
+                });
+
+            }, 1000);
+        }
+        // ===== MUSIC =====
+        let musicPlaying = false;
+        const audio = document.getElementById('weddingMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIconOff = document.getElementById('musicIconOff');
+        const musicIconOn = document.getElementById('musicIconOn');
+
+        function playMusic() {
+            audio.play().then(() => {
+                musicPlaying = true;
+                musicIconOff.style.display = 'none';
+                musicIconOn.style.display = 'block';
+                musicToggle.classList.add('playing');
+            }).catch(e => {
+                console.log('Audio autoplay blocked by browser:', e);
+            });
+        }
+
+        function toggleMusic() {
+            if (!envelopeOpened) return;
+            if (musicPlaying) {
+                audio.pause();
+                musicPlaying = false;
+                musicIconOff.style.display = 'block';
+                musicIconOn.style.display = 'none';
+                musicToggle.classList.remove('playing');
+            } else {
+                audio.play().then(() => {
+                    musicPlaying = true;
+                    musicIconOff.style.display = 'none';
+                    musicIconOn.style.display = 'block';
+                    musicToggle.classList.add('playing');
+                }).catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+            }
+        }
+
+        // ===== COUNTDOWN =====
+        function startCountdown() {
+            const weddingDate = new Date('2026-08-29T15:00:00').getTime();
+
+            function update() {
+                const now = new Date().getTime();
+                const diff = weddingDate - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').textContent = String(days).padStart(2, '0');
+                    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                }
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        // ===== SCROLL ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.1}s`;
+            observer.observe(el);
+        });
+
+        // ===== PETALS =====
+        function initPetals() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 12 + 's';
+                petal.style.animationDuration = (8 + Math.random() * 6) + 's';
+                petal.style.width = (6 + Math.random() * 6) + 'px';
+                petal.style.height = petal.style.width;
+                container.appendChild(petal);
+            }
+        }
+
+        // ===== CAROUSEL INFINI — CORRECTION =====
+        function initInfiniteCarousel(trackId) {
+            const track = document.getElementById(trackId);
+            if (!track) return;
+
+            const items = Array.from(track.children);
+            const totalItems = items.length;
+
+            // On clone tous les éléments pour créer un effet de boucle
+            for (let i = 0; i < totalItems; i++) {
+                const clone = items[i].cloneNode(true);
+                track.appendChild(clone);
+            }
+
+            let position = 0;
+            const speed = 0.5; // pixels par frame (ajuste pour la vitesse)
+
+            function animate() {
+                const itemWidth = items[0].offsetWidth + 20; // largeur + gap
+                const totalWidth = totalItems * itemWidth;
+
+                position -= speed;
+                if (Math.abs(position) >= totalWidth) {
+                    position = 0;
+                    // Réinitialiser la position sans saut
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(${position}px)`;
+                    // Forcer un reflow
+                    track.offsetHeight;
+                    track.style.transition = 'transform 0.1s linear';
+                }
+
+                track.style.transform = `translateX(${position}px)`;
+                requestAnimationFrame(animate);
+            }
+
+            // Démarrer l'animation
+            track.style.transition = 'transform 0.1s linear';
+            animate();
+        }
+
+        // Initialiser les deux carrousels
+        window.addEventListener('load', () => {
+            initInfiniteCarousel('carouselTrack1');
+            initInfiniteCarousel('carouselTrack2');
+        });
+    </script>
+</body>
+
+</html>
